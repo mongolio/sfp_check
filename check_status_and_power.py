@@ -1,3 +1,6 @@
+""" Script to verify SFP TX/RX power levels and operational
+status of the ethernet interface to be used as part
+ of cable testing procedure """
 import sys
 import paramiko
 import time
@@ -6,7 +9,6 @@ import os
 import re
 import socket
 import win32com.client as win32
-
 
 ssh = paramiko.SSHClient()
 # Addressing SSH host_key inconvenience
