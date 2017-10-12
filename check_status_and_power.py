@@ -1,6 +1,6 @@
 """ Script to verify SFP TX/RX power levels and operational
-status of the ethernet interface to be used as part
- of cable testing procedure """
+status of the ethernet interface on NX-OS platforms.
+ To be used as part of cable testing procedure """
 import sys
 import paramiko
 import time
