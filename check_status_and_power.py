@@ -11,12 +11,16 @@ import socket
 import win32com.client as win32
 
 ssh = paramiko.SSHClient()
+
 # Addressing SSH host_key inconvenience
 ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
 path = os.path.dirname(os.path.abspath(__file__))
 
+
 def read_market_file(path,input_file):
+    """Function to read input file that lists rows of
+     devices/interfaces delimited by comas and """
     _file = open("%s\input\%s" % (path,input_file), "r")
     content = _file.readlines()
     content_list = list()
