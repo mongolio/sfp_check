@@ -9,6 +9,7 @@ import os
 import re
 import socket
 import win32com.client as win32
+import csv
 
 ssh = paramiko.SSHClient()
 
@@ -22,12 +23,8 @@ def read_market_file(path,input_file):
     """Function to read input file that lists rows of
      devices/interfaces delimited by comas and """
     _file = open("%s\input\%s" % (path,input_file), "r")
-    content = _file.readlines()
-    content_list = list()
-    _file.close()
-    for line in content:
-        content_list.append(line.split(","))
-    return content_list
+    content_list = csv.reader(_file)
+    return content_list,_file
 
 def invoke_excel():
     excel = win32.gencache.EnsureDispatch('Excel.Application')
@@ -164,10 +161,11 @@ class intf(object):
 if __name__ == "__main__":
     for input_file in os.listdir(path + "\input"):
         if input_file.endswith(".csv") and not input_file.startswith("~"):
-            devices_int_list = read_market_file(path, input_file)
+            devices_int_list, openned_file = read_market_file(path, input_file)
             username, password = check_credentials()
             wb, ws, excel = invoke_excel()
             row = 2
+            print devices_int_list
             for device in devices_int_list:
                 column = 3
                 name = device.pop(0).strip()
@@ -178,6 +176,7 @@ if __name__ == "__main__":
                 draw_border(ws, row, column)
                 row += 4
                 ssh.close()
+        openned_file.close()
         close_excel(path, wb, excel, input_file)
 
 
